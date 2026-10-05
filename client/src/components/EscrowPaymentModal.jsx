@@ -8,6 +8,12 @@ export default function EscrowPaymentModal({
   onClose,
   onPaymentSuccess
 }) {
+  const [loading, setLoading] = useState(false);
+  const [cardNumber, setCardNumber] = useState('•••• •••• •••• 4242');
+  const [expiry, setExpiry] = useState('12/28');
+  const [cvc, setCvc] = useState('982');
+  const [error, setError] = useState(null);
+
   if (!isOpen || !bookingDetails) return null;
 
   const { tutor, slot, sessionMode, campusLocationNotes, totalAmount, isGroup } = bookingDetails;
@@ -15,12 +21,6 @@ export default function EscrowPaymentModal({
   // Calculate 12% platform split
   const platformFee = Math.round(totalAmount * 0.12);
   const tutorPayout = totalAmount - platformFee;
-
-  const [loading, setLoading] = useState(false);
-  const [cardNumber, setCardNumber] = useState('•••• •••• •••• 4242');
-  const [expiry, setExpiry] = useState('12/28');
-  const [cvc, setCvc] = useState('982');
-  const [error, setError] = useState(null);
 
   const handleAuthorize = async () => {
     setLoading(true);

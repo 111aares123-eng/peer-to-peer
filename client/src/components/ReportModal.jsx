@@ -15,11 +15,11 @@ export default function ReportModal({
   onClose,
   onSubmitReport
 }) {
-  if (!isOpen || !targetUser) return null;
-
   const [category, setCategory] = useState(REPORT_CATEGORIES[0]);
   const [description, setDescription] = useState('');
   const [submitting, setSubmitting] = useState(false);
+
+  if (!isOpen || !targetUser) return null;
 
   const handleSubmit = async (e) => {
     e.preventDefault();

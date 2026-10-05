@@ -1,7 +1,9 @@
-const { describe, it, before } = require('node:test');
+const { describe, it, before, after } = require('node:test');
 const assert = require('node:assert/strict');
+const { app, server } = require('../src/index');
 
-const BASE_URL = 'http://localhost:5000/api';
+let BASE_URL = 'http://localhost:5000/api';
+let isRunningOwnServer = false;
 
 describe('Peer-to-Peer Marketplace End-to-End API Integration', () => {
   let studentToken = '';
@@ -11,8 +13,26 @@ describe('Peer-to-Peer Marketplace End-to-End API Integration', () => {
   let bookingId = '';
 
   before(async () => {
+    // Check if server is already listening, otherwise start in-process
+    if (!server.listening) {
+      await new Promise((resolve) => {
+        server.listen(0, () => {
+          const port = server.address().port;
+          BASE_URL = `http://localhost:${port}/api`;
+          isRunningOwnServer = true;
+          resolve();
+        });
+      });
+    }
+
     // Ensure clean state before running integration tests
     await fetch(`${BASE_URL}/admin/reseed`, { method: 'POST' });
+  });
+
+  after(async () => {
+    if (isRunningOwnServer && server.listening) {
+      await new Promise((resolve) => server.close(resolve));
+    }
   });
 
   it('1. GET /api/health returns operational status', async () => {

@@ -146,7 +146,6 @@ export default function LiveSessionRoom({
   };
 
   const isStudent = currentUser?.id === booking.student_id;
-  const isTutor = currentUser?.role === 'tutor' || currentUser?.id === booking.tutor_id;
 
   return (
     <div className="fixed inset-0 z-50 bg-gray-950 flex flex-col overflow-hidden animate-in fade-in">

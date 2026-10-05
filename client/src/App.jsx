@@ -11,7 +11,6 @@ import StudentDashboard from './components/StudentDashboard';
 import TutorDashboard from './components/TutorDashboard';
 import AdminDashboard from './components/AdminDashboard';
 import ReportModal from './components/ReportModal';
-import { ShieldCheck, Award, Zap, BookOpen } from 'lucide-react';
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -189,7 +188,7 @@ export default function App() {
 
   // Booking Flow: Step 3 -> Execute atomic booking & escrow hold
   const handlePaymentSuccess = async (bookingData) => {
-    const res = await api.createBooking({
+    await api.createBooking({
       ...bookingData,
       studentId: currentUser.id
     });

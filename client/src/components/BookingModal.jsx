@@ -17,13 +17,13 @@ export default function BookingModal({
   onClose,
   onProceedToPayment
 }) {
-  if (!isOpen || !tutor) return null;
-
-  const [selectedSlot, setSelectedSlot] = useState(initialSlot || tutor.slots?.[0] || null);
+  const [selectedSlot, setSelectedSlot] = useState(initialSlot || tutor?.slots?.[0] || null);
   const [sessionMode, setSessionMode] = useState('IN_APP_VIDEO');
   const [campusLocation, setCampusLocation] = useState(CAMPUS_LOCATIONS[0]);
   const [customLocationNotes, setCustomLocationNotes] = useState('');
-  const [isGroupMode, setIsGroupMode] = useState(selectedSlot?.is_group || false);
+  const [isGroupMode, setIsGroupMode] = useState(initialSlot?.is_group || false);
+
+  if (!isOpen || !tutor) return null;
 
   // Calculate pricing
   const baseRate = tutor.effectiveRate;
