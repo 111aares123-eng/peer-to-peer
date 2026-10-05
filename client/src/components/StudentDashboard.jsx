@@ -97,10 +97,11 @@ export default function StudentDashboard({
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {filteredBookings.map((b) => {
-            const isConfirmed = b.state === 'CONFIRMED';
-            const isInSession = b.state === 'IN_SESSION';
-            const isCompleted = b.state === 'COMPLETED';
-            const isCancelled = b.state === 'CANCELLED';
+            const currentStatus = b.state || b.status || 'CONFIRMED';
+            const isConfirmed = currentStatus === 'CONFIRMED';
+            const isInSession = currentStatus === 'IN_SESSION' || currentStatus === 'IN_PROGRESS';
+            const isCompleted = currentStatus === 'COMPLETED';
+            const isCancelled = currentStatus === 'CANCELLED';
 
             return (
               <div
@@ -122,7 +123,7 @@ export default function StudentDashboard({
                           {b.subject_code}
                         </span>
                       </div>
-                      <p className="text-xs text-gray-400">{b.subject_name}</p>
+                      <p className="text-xs text-gray-400">{b.subject_name || 'Academic Tutoring'}</p>
                     </div>
                   </div>
 
@@ -138,7 +139,7 @@ export default function StudentDashboard({
                         : 'bg-rose-500/20 text-rose-300 border border-rose-500/30'
                     }`}
                   >
-                    {b.state}
+                    {currentStatus}
                   </span>
                 </div>
 
@@ -147,7 +148,7 @@ export default function StudentDashboard({
                   <div className="flex items-center justify-between">
                     <span className="text-gray-400">Scheduled Time:</span>
                     <span className="font-semibold text-white">
-                      {formatDate(b.slot_date)} • {formatTime(b.slot_start)} - {formatTime(b.slot_end)}
+                      {formatDate(b.slot_date || b.start_time)} • {formatTime(b.slot_start || b.start_time)} - {formatTime(b.slot_end || b.end_time)}
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
