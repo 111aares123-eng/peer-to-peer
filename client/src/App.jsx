@@ -47,7 +47,7 @@ export default function App() {
 
   // Initialize Socket.io
   useEffect(() => {
-    const socket = io();
+    const socket = io(import.meta.env.VITE_API_URL || undefined);
     socketRef.current = socket;
 
     socket.on('booking_state_changed', () => {

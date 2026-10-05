@@ -1,4 +1,5 @@
-const BASE_URL = '/api';
+const API_ORIGIN = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/+$/, '') : '';
+const BASE_URL = `${API_ORIGIN}/api`;
 
 export async function apiRequest(endpoint, options = {}) {
   const token = localStorage.getItem('p2p_auth_token');
