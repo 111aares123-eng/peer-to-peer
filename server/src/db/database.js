@@ -21,4 +21,15 @@ const schemaPath = path.join(__dirname, 'schema.sql');
 const schemaSql = fs.readFileSync(schemaPath, 'utf8');
 db.exec(schemaSql);
 
+// Auto-seed if database is newly created and empty
+try {
+  const userCount = db.prepare('SELECT COUNT(*) as count FROM users').get()?.count || 0;
+  if (userCount === 0) {
+    const seedDatabase = require('./seed');
+    seedDatabase();
+  }
+} catch (e) {
+  console.warn('[DB Auto-Seed Warning]:', e.message);
+}
+
 module.exports = db;

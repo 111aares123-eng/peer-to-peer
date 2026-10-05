@@ -11,6 +11,7 @@ import StudentDashboard from './components/StudentDashboard';
 import TutorDashboard from './components/TutorDashboard';
 import AdminDashboard from './components/AdminDashboard';
 import ReportModal from './components/ReportModal';
+import { ShieldCheck } from 'lucide-react';
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState(null);
